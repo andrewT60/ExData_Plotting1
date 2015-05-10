@@ -1,15 +1,33 @@
-## Getting full dataset
-data_full <- read.csv("./household_power_consumption.txt", header=T, sep=';', na.strings="?", 
-                      nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
-data_full$Date <- as.Date(data_full$Date, format="%d/%m/%Y")
+### Exploratory Data Analysis: Project 1
+### Last Modified: 5/8/2015
+### Code Template for plotX.R    X=1,2,3,4
+### file: plot4.R
 
-## Subsetting the data
-data <- subset(data_full, subset=(Date >= "2007-02-01" & Date <= "2007-02-02"))
-rm(data_full)
+### Load dataset
+### The dataset has 2,075,259 rows and 9 columns
+### In this dataset missing values are coded as "?"
 
-## Converting dates
-datetime <- paste(as.Date(data$Date), data$Time)
-data$Datetime <- as.POSIXct(datetime)
+data <- read.table(
+        "./household_power_consumption.txt", # data in the current directory
+        header = TRUE, sep=";", quote="\"", na.strings="?",
+        nrows = 2075259, stringsAsFactors=FALSE,
+        check.names=FALSE, comment.char="" # turn off interpretation of comments
+)
+
+
+### use data from the dates 2007-02-01 and 2007-02-02 (note the format)
+### by subsetting to those dates.
+### needs to convert the Date and Time variables to Date/Time classes in R using
+### the strptime() and as.Date() functions.
+
+
+data$Date <- as.Date(data$Date, format="%d/%m/%Y")
+data <- subset(data, subset=(Date >= "2007-02-01" & Date <= "2007-02-02"))
+x <- paste(as.Date(data$Date), data$Time)
+data$Datetime <-  as.POSIXct(x)
+
+### Construct the Plots (set the colors as in the web version)
+### See Basic Plotting System Part 2
 
 ## Plot 4: a multiple base plots
 ## See basic plot system part 2
